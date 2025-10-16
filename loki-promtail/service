@@ -1,0 +1,20 @@
+# nano /etc/systemd/system/loki.service
+
+[Unit]
+Description=Loki
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStart=docker compose -f /home/user/monitoring/loki-promtail/docker-compose.yaml up -d
+ExecStop=docker compose -f /home/user/monitoring/loki-promtail/docker-compose.yaml down
+RemainAfterExit=yes
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+
+#     sudo systemctl daemon-reload
+#     sudo systemctl enable loki.service
+#     sudo systemctl start loki.service
